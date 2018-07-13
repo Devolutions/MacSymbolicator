@@ -12,8 +12,6 @@
 #import "NSString+RubyConvenience.h"
 #import "CrashFile.h"
 #import "DSYMFile.h"
-#import "MBCrashReporter.h"
-#import <Sparkle/Sparkle.h>
 
 @interface AppDelegate() <MBDropZoneDelegate>
 
@@ -27,8 +25,6 @@
 
 @property (nonatomic, strong) CrashFile* crashReport;
 @property (nonatomic, strong) DSYMFile* dsymFile;
-
-@property (nonatomic, strong) IBOutlet SUUpdater *updater;
 
 @end
 
@@ -56,13 +52,6 @@
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-    MBCrashReporter* crashReporter = [[MBCrashReporter alloc] initWithUploadURL:@"http://inket.herokuapp.com/crashreporter/MacSymbolicator"
-                                                              andDeveloperEmail:@"inket@outlook.com"];
-    
-    if ([crashReporter hasNewCrashReport] && [MBCrashReporter askToSendCrashReport]) {
-        [crashReporter performSelectorOnMainThread:@selector(sendCrashReport) withObject:nil waitUntilDone:NO];
-    }
-    
     if ([_resultWindow isKeyWindow]) {
         [NSApp addWindowsItem:_window title:@"MacSymbolicator" filename:NO];
     } else {
